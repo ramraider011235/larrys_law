@@ -177,7 +177,15 @@ def clean_data_5(data):
     return data        
 
 
-def clean_sort(d0):    
+def clean_data_6(data, mkt_cap_min, mkt_cap_max):
+    data['market_cap'] = data['market_cap'] * 1000000
+    data = data[data['market_cap'] >= mkt_cap_min]
+    data = data[data['market_cap'] <= mkt_cap_max]
+    data['market_cap'] = [f"${x:,.2f}" for x in list(data['market_cap'])]
+    return data
+
+
+def clean_sort(d0, mkt_cap_min=750000000, mkt_cap_max=2500000000):    
     string_list = ['Ticker', 'Company', 'Sector', 'Industry', 'Country']
     percent_list = ['Dividend Yield', 'Payout Ratio', 'Insider Ownership', 'Insider Transactions', 'Institutional Ownership', 'Institutional Transactions', 'Float Short', 'Return on Assets', 'Return on Equity', 'Return on Investment', 'Gross Margin', 'Operating Margin', 'Profit Margin', 'Performance (Half Year)', 'Performance (Year)', 'Performance (YTD)', 'Volatility (Week)', 'Volatility (Month)', '52-Week Low', 'Gap','20-Day Simple Moving Average', '50-Day Simple Moving Average', '200-Day Simple Moving Average', '50-Day High', '50-Day Low', '52-Week High','EPS growth this year', 'EPS growth next year', 'EPS growth past 5 years', 'EPS growth next 5 years', 'Sales growth past 5 years', 'EPS growth quarter over quarter', 'Sales growth quarter over quarter', 'Performance (Week)', 'Performance (Month)', 'Performance (Quarter)']
     number_list = ['No.', 'Market Cap', 'P/E', 'Forward P/E', 'PEG', 'P/S', 'P/B', 'P/Cash', 'P/Free Cash Flow', 'EPS (ttm)',   'Current Ratio', 'Quick Ratio', 'LT Debt/Equity', 'Total Debt/Equity', 'Shares Outstanding', 'Shares Float', 'Short Ratio', 'Beta','Average True Range', 'Relative Strength Index (14)', 'Analyst Recom', 'Average Volume', 'Relative Volume', 'Price', 'Volume', 'Target Price']
@@ -188,6 +196,7 @@ def clean_sort(d0):
     data = clean_data_3(data)
     data = clean_data_4(data, a_lst)
     data = clean_data_5(data)
+    # data = clean_data_6(data, mkt_cap_min, mkt_cap_max)
     return data 
 
 
